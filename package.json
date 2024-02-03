@@ -1,0 +1,30 @@
+{
+    "name": "cars-api",
+    "version": "1.0.0",
+    "description": "Final project JS Cars API || Members: Eric Woll, Ryan Singleton, Saul Flores, Karras Phiri, Jared Serrao, Kristina Hayes",
+    "main": "index.js",
+    "scripts": {
+        "start": "nodemon server.js",
+        "start-prod": "node server.js",
+        "swagger": "node ./swagger.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "body-parser": "^1.20.2",
+        "cors": "^2.8.5",
+        "dotenv": "^16.4.1",
+        "express": "^4.18.2",
+        "express-session": "^1.18.0",
+        "mongoose": "^8.1.1",
+        "nodemon": "^3.0.3",
+        "passport": "^0.7.0",
+        "passport-github2": "^0.1.12",
+        "swagger-ui-express": "^5.0.0",
+        "validatorjs": "^3.22.1"
+    },
+    "devDependencies": {
+        "swagger-autogen": "^2.23.7"
+    }
+}
