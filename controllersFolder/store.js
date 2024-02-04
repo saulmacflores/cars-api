@@ -71,6 +71,8 @@ exports.findOneStore = (req, res) => {
                 res.status(404).send({
                     message: `No Store found with id of ${store_id}.`,
                 });
+            } else {
+                res.send(data[0]);
             }
         })
         .catch((error) => {
