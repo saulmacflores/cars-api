@@ -42,6 +42,64 @@ const getOneVehicle = async (req, res, next) => {
   }
 };
 
+const getVehicleByVIN = async (req, res, vin, next) => {
+    // #swagger.tags = ['Vehicles']
+  // #swagger.description = 'Endpoint to get a vehicle by VIN'
+  // #swagger.summary = 'Get one vehicle by VIN'
+
+//   const { vin } = req.query; // Get VIN from query parameters
+
+  if (!vin) {
+    return res
+      .status(400)
+      .json({ message: "VIN query parameter is required." });
+  }
+
+  try {
+    const vehicle = await Vehicle.findOne({ vin: vin });
+    if (vehicle) {
+      res.json(vehicle);
+    } else {
+      res
+        .status(404)
+        .json({ message: "Vehicle with the specified VIN not found." });
+    }
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error accessing the database: " + error.message });
+  }
+};
+
+const getVehiclesByMake = async (req, res, next) => {
+     // #swagger.tags = ['Vehicles']
+  // #swagger.description = 'Endpoint to get all vehicles by make'
+  // #swagger.summary = 'Get all vehicles by make'
+
+  const { make } = req.query; // Get make from query parameters
+
+  if (!make) {
+    return res
+      .status(400)
+      .json({ message: "Make query parameter is required." });
+  }
+
+  try {
+    const vehicles = await Vehicle.find({ make: make });
+    if (vehicles.length > 0) {
+      res.json(vehicles);
+    } else {
+      res
+        .status(404)
+        .json({ message: "No vehicles found for the specified make." });
+    }
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error accessing the database: " + error.message });
+  }
+};
+
 const create = (req, res) => {
   // #swagger.tags = ['Vehicles']
   // #swagger.description = 'Endpoint to create a vehicle'
@@ -196,6 +254,8 @@ const deleteAll = (req, res) => {
 module.exports = {
   getAllVehicles,
   getOneVehicle,
+  getVehicleByVIN,
+  getVehiclesByMake,
   create,
   update,
   deleteOne,
