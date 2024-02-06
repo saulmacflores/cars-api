@@ -1,0 +1,102 @@
+[
+    {
+      "make": "Toyota",
+      "model": "Camry",
+      "year": "2019",
+      "color": "Silver",
+      "price": "22000",
+      "condition": "Used",
+      "vin": "1HGBH41JXMN109186"
+    },
+    {
+      "make": "Ford",
+      "model": "F-150",
+      "year": "2020",
+      "color": "Black",
+      "price": "30000",
+      "condition": "Used",
+      "vin": "1FTFW1ET4EKD39678"
+    },
+    {
+      "make": "Honda",
+      "model": "Civic",
+      "year": "2018",
+      "color": "Blue",
+      "price": "18000",
+      "condition": "Used",
+      "vin": "19XFC2F59GE227642"
+    },
+    {
+      "make": "Chevrolet",
+      "model": "Tahoe",
+      "year": "2021",
+      "color": "White",
+      "price": "50000",
+      "condition": "New",
+      "vin": "1GNSKCKCXHR306789"
+    },
+    {
+      "make": "BMW",
+      "model": "X5",
+      "year": "2019",
+      "color": "Black",
+      "price": "55000",
+      "condition": "Used",
+      "vin": "5UXCR6C50KLL09876"
+    },
+    {
+      "make": "Tesla",
+      "model": "Model S",
+      "year": "2020",
+      "color": "Red",
+      "price": "75000",
+      "condition": "New",
+      "vin": "5YJSA1E26LF150321"
+    },
+    {
+      "make": "Nissan",
+      "model": "Altima",
+      "year": "2018",
+      "color": "Grey",
+      "price": "17000",
+      "condition": "Used",
+      "vin": "1N4BL4CV6KC135782"
+    },
+    {
+      "make": "Jeep",
+      "model": "Wrangler",
+      "year": "2021",
+      "color": "Green",
+      "price": "42000",
+      "condition": "New",
+      "vin": "1C4HJXDGXML589674"
+    },
+    {
+      "make": "Audi",
+      "model": "Q7",
+      "year": "2019",
+      "color": "Blue",
+      "price": "60000",
+      "condition": "Used",
+      "vin": "WA1VAAF75KD005897"
+    },
+    {
+      "make": "Mazda",
+      "model": "CX-5",
+      "year": "2020",
+      "color": "Red",
+      "price": "28000",
+      "condition": "Used",
+      "vin": "JM3KFBCM2K0567389"
+    },
+    {
+        "make": "New",
+        "model": "Vehicle",
+        "year": "1996",
+        "color": "Red",
+        "price": "2000",
+        "condition": "Used",
+        "vin": "1KLDF084JKL974"
+    }
+  ]
+  

@@ -1,0 +1,46 @@
+GET http://localhost:3000/vehicles
+
+###
+
+GET http://localhost:3000/vehicles/65c18a42f0387cbf6f18f1ae
+
+###
+
+POST http://localhost:3000/vehicles/
+Content-Type: application/json
+
+{
+  "make": "New",
+  "model": "Vehicle",
+  "year": "1996",
+  "color": "Red",
+  "price": "2000",
+  "condition": "Used",
+  "vin": "1KLDF084JKL974"
+}
+
+###
+
+###
+
+PUT http://localhost:3000/vehicles/65c18a42f0387cbf6f18f1ae
+Content-Type: application/json
+
+{
+  "make": "Updated",
+  "model": "Vehicle",
+  "year": "2002",
+  "color": "Blue",
+  "price": "5000",
+  "condition": "Used",
+  "vin": "1DGPKE835098JEL"
+}
+
+###
+
+
+DELETE http://localhost:3000/vehicles/65c18a42f0387cbf6f18f1ae
+
+###
+
+
