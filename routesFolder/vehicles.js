@@ -3,6 +3,10 @@ const routes = require("express").Router();
 const vehiclesController = require("../controllersFolder/vehicles");
 const { isAuthenticated } = require("../middlewareFolder/authenticate");
 
+routes.get("/new", (req, res) => {
+    res.render("new-vehicle");
+});
+
 routes.get("/", (req, res) => {
   /* #swagger.parameters['vin'] = {
     in: 'query',
@@ -39,6 +43,8 @@ routes.get("/", (req, res) => {
 
 //Get by vehicle ID
 routes.get("/:vehicle_id", vehiclesController.getOneVehicle);
+
+
 
 // create a vehicle
 routes.post("/", vehiclesController.create);

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>New Vehicle</title>
+    <style>
+      html {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(to right, #0072ff, #00c6ff);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      body {
+        margin-top: 50px;
+      }
+      .vehicle-form-card {
+        background: #fff; /* White background for the form card */
+        color: #000; /* Black text color for contrast */
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Add some shadow for depth */
+        display: flex;
+        flex-direction: column;
+        gap: 15px; /* Space between form elements */
+        max-width: 500px; /* Max width of the form */
+        width: 100%; /* Responsive width */
+        margin-top: 20px;
+      }
+      .vehicle-form-card label {
+        font-weight: bold; /* Make labels bold */
+      }
+      .vehicle-form-card input,
+      .vehicle-form-card select,
+      .vehicle-form-card textarea {
+        width: 90%; /* Full width form elements */
+        padding: 10px; /* Padding for input, select, and textarea */
+        margin: 10px 0; /* Margin for form elements */
+        border-radius: 5px; /* Rounded corners for form elements */
+        border: 1px solid #ddd; /* Slight border for visibility */
+        background: #f9f9f9; /* Slightly off-white for form elements for contrast against the card */
+        color: #000; /* Black text color for input */
+      }
+      .vehicle-form-card button {
+        background: #0072ff; /* Button color */
+        color: #fff; /* Button text color */
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer; /* Cursor on hover */
+        transition: smooth 0.3s ease; /* Smooth background transition */
+      }
+      .vehicle-form-card button:hover {
+        background: #005ecf; /* Darker shade on hover */
+      }
+
+      .top-bar {
+        padding: 10px;
+        padding-top: 20px;
+        background: transparent;
+        text-align: right;
+        width: 100%;
+        box-sizing: border-box;
+        z-index: 1000;
+        
+      }
+
+      .api-docs-button {
+        background: white;
+        color: #0072ff;
+        border: 1px solid #0072ff;
+      }
+      .api-docs-button:hover {
+        background: lightgrey;
+        transform: translate(-5px, -5px);
+      }
+
+      .all-vehicles {
+        background: black;
+        color: white;
+        border: 1px solid black;
+      }
+
+      .all-vehicles:hover {
+        background: darkgray;
+        transform: translate(-5px, -5px);
+      }
+
+      .button {
+        display: inline-block;
+        padding: 10px 20px;
+        margin-top: 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+      }
+    </style>
+  </head>
+  
+  <body>
+    <div class="top-bar">
+        <a href="/vehicles" class="button all-vehicles">All Vehicles</a>
+        <a href="/api-docs" class="button api-docs-button">API Docs</a>
+      </div>
+    <div class="vehicle-form-card">
+      <form
+        action="/vehicles"
+        method="post"
+        id="vehicleForm"
+        enctype="application/x-www-form-urlencoded"
+      >
+        <div>
+          <label for="make">Make:</label>
+          <input type="text" id="make" name="make" required />
+        </div>
+        <div>
+          <label for="model">Model:</label>
+          <input type="text" id="model" name="model" required />
+        </div>
+        <div>
+          <label for="year">Year:</label>
+          <input type="number" id="year" name="year" required />
+        </div>
+        <div>
+          <label for="color">Color:</label>
+          <input type="text" id="color" name="color" required />
+        </div>
+        <div>
+          <label for="price">Price:</label>
+          <input type="text" id="price" name="price" required />
+        </div>
+        <div>
+          <label for="condition">Condition:</label>
+          <select id="condition" name="condition" required>
+            <option value="New">New</option>
+            <option value="Used">Used</option>
+          </select>
+        </div>
+        <div>
+          <label for="vin">VIN:</label>
+          <input type="text" id="vin" name="vin" required />
+        </div>
+        <div>
+          <label for="image">Vehicle Image:</label>
+          <input type="hidden" id="base64Image" name="base64Image" />
+          <input type="file" id="image" name="image" accept="image/*" />
+        </div>
+        <!-- Your existing Star Rating and Vehicle Description fields here -->
+        <button type="submit">Add Vehicle</button>
+      </form>
+    </div>
+
+    <script>
+      // Your existing JavaScript for star ratings
+
+      document.getElementById("image").addEventListener("change", function () {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const base64String = e.target.result
+            .replace("data:", "")
+            .replace(/^.+,/, "");
+          // Create a hidden input to store the Base64 string
+          let base64Input = document.getElementById("base64Image");
+          if (!base64Input) {
+            base64Input = document.createElement("input");
+            base64Input.type = "hidden";
+            base64Input.id = "base64Image";
+            base64Input.name = "base64Image";
+            document.getElementById("vehicleForm").appendChild(base64Input);
+          }
+          base64Input.value = base64String;
+        };
+        reader.readAsDataURL(this.files[0]);
+      });
+    </script>
+  </body>
+</html>

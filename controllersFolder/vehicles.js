@@ -2,12 +2,25 @@
 const Vehicle = require("../modelsFolder/vehicles.js");
 
 const getAllVehicles = async (req, res, next) => {
-  // #swagger.tags = ['Vehicles']
-  // #swagger.description = 'Endpoint to get all vehicles'
-  // #swagger.summary = 'Get all vehicles'
   try {
-    const vehicles = await Vehicle.find({});
-    res.json(vehicles);
+    let vehicles = await Vehicle.find({});
+
+    // If the client accepts HTML, render the page without modifying the vehicles
+    if (req.accepts("html")) {
+      res.render("vehicles", { vehicles: vehicles });
+    } else {
+      // Convert documents to objects and shorten the base64Image property for JSON response
+      vehicles = vehicles.map((vehicle) => {
+        const vehicleObj = vehicle.toObject();
+        // Shorten the base64Image property to the first 10 characters
+        if (vehicleObj.base64Image && vehicleObj.base64Image.length > 10) {
+          vehicleObj.base64Image =
+            vehicleObj.base64Image.substring(0, 10) + "...";
+        }
+        return vehicleObj;
+      });
+      res.json(vehicles);
+    }
   } catch (error) {
     res
       .status(500)
@@ -31,7 +44,21 @@ const getOneVehicle = async (req, res, next) => {
   try {
     const vehicle = await Vehicle.findById(vehicleId);
     if (vehicle) {
-      res.json(vehicle);
+      if (req.accepts("html")) {
+        res.render("vehicle", { vehicle: vehicle });
+      } else {
+        // Convert documents to objects and shorten the base64Image property for JSON response
+        vehicle = vehicle.map((vehicle) => {
+          const vehicleObj = vehicle.toObject();
+          // Shorten the base64Image property to the first 10 characters
+          if (vehicleObj.base64Image && vehicleObj.base64Image.length > 10) {
+            vehicleObj.base64Image =
+              vehicleObj.base64Image.substring(0, 10) + "...";
+          }
+          return vehicleObj;
+        });
+        res.json(vehicle);
+      }
     } else {
       res.status(404).json({ message: "Vehicle not found." });
     }
@@ -43,11 +70,11 @@ const getOneVehicle = async (req, res, next) => {
 };
 
 const getVehicleByVIN = async (req, res, vin, next) => {
-    // #swagger.tags = ['Vehicles']
+  // #swagger.tags = ['Vehicles']
   // #swagger.description = 'Endpoint to get a vehicle by VIN'
   // #swagger.summary = 'Get one vehicle by VIN'
 
-//   const { vin } = req.query; // Get VIN from query parameters
+  //   const { vin } = req.query; // Get VIN from query parameters
 
   if (!vin) {
     return res
@@ -56,9 +83,23 @@ const getVehicleByVIN = async (req, res, vin, next) => {
   }
 
   try {
-    const vehicle = await Vehicle.findOne({ vin: vin });
-    if (vehicle) {
-      res.json(vehicle);
+    const vehicles = await Vehicle.findOne({ vin: vin });
+    if (vehicles) {
+      if (req.accepts("html")) {
+        res.render("vehicles", { vehicles: vehicles });
+      } else {
+        // Convert documents to objects and shorten the base64Image property for JSON response
+        vehicles = vehicles.map((vehicle) => {
+          const vehicleObj = vehicle.toObject();
+          // Shorten the base64Image property to the first 10 characters
+          if (vehicleObj.base64Image && vehicleObj.base64Image.length > 10) {
+            vehicleObj.base64Image =
+              vehicleObj.base64Image.substring(0, 10) + "...";
+          }
+          return vehicleObj;
+        });
+        res.json(vehicles);
+      }
     } else {
       res
         .status(404)
@@ -72,7 +113,7 @@ const getVehicleByVIN = async (req, res, vin, next) => {
 };
 
 const getVehiclesByMake = async (req, res, next) => {
-     // #swagger.tags = ['Vehicles']
+  // #swagger.tags = ['Vehicles']
   // #swagger.description = 'Endpoint to get all vehicles by make'
   // #swagger.summary = 'Get all vehicles by make'
 
@@ -85,9 +126,23 @@ const getVehiclesByMake = async (req, res, next) => {
   }
 
   try {
-    const vehicles = await Vehicle.find({ make: make });
+    let vehicles = await Vehicle.find({ make: make });
     if (vehicles.length > 0) {
-      res.json(vehicles);
+      if (req.accepts("html")) {
+        res.render("vehicles", { vehicles: vehicles });
+      } else {
+        // Convert documents to objects and shorten the base64Image property for JSON response
+        vehicles = vehicles.map((vehicle) => {
+          const vehicleObj = vehicle.toObject();
+          // Shorten the base64Image property to the first 10 characters
+          if (vehicleObj.base64Image && vehicleObj.base64Image.length > 10) {
+            vehicleObj.base64Image =
+              vehicleObj.base64Image.substring(0, 10) + "...";
+          }
+          return vehicleObj;
+        });
+        res.json(vehicles); // Send JSON response here, inside the else block
+      }
     } else {
       res
         .status(404)
@@ -105,7 +160,8 @@ const create = (req, res) => {
   // #swagger.description = 'Endpoint to create a vehicle'
   // #swagger.summary = 'Create a vehicle'
 
-  const { make, model, year, color, price, condition, vin } = req.body;
+  const { make, model, year, color, price, condition, vin, base64Image } =
+    req.body;
 
   // Validation
   if (!make) {
@@ -143,15 +199,20 @@ const create = (req, res) => {
     price,
     condition,
     vin,
+    base64Image,
   });
 
   // Save Vehicle in the database
   vehicle
     .save()
     .then((data) => {
-      res.send(
-        `Success! ${data.make} ${data.model} created with VIN: ${data.vin} and ID: ${data._id}.`
-      );
+      if (req.accepts("html")) {
+        return res.redirect("/vehicles");
+      } else {
+        res.send(
+          `Success! ${data.make} ${data.model} created with VIN: ${data.vin} and ID: ${data._id}.`
+        );
+      }
     })
     .catch((err) => {
       res.status(500).send({
@@ -187,7 +248,11 @@ const update = (req, res) => {
           message: `Cannot update Vehicle with id=${id}. Maybe Vehicle was not found!`,
         });
       } else {
-        res.send({ message: "Vehicle was updated successfully." });
+        if (req.accepts("html")) {
+          res.redirect("/vehicles/" + id);
+        } else {
+          res.send({ message: "Vehicle was updated successfully." });
+        }
       }
     })
     .catch((err) => {

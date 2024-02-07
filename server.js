@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const path = require('path');
+
 
 
 const app = express();
@@ -23,10 +25,14 @@ app.use(
     })
 );
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }));
 
 // Data Routes
 app.use('/', require('./routesFolder'));
+
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, './viewsFolder'));
 
 // Exception Catch
 process.on('uncaughtException', (err, origin) => {

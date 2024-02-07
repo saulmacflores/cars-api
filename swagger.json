@@ -240,6 +240,9 @@
                 },
                 "vin": {
                   "example": "any"
+                },
+                "base64Image": {
+                  "example": "any"
                 }
               }
             }

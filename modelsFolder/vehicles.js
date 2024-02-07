@@ -10,6 +10,7 @@ const vehicleSchema = mongoose.Schema(
     price: Number,
     condition: String,
     vin: String,
+    base64Image: String,
   },
   { timestamps: true }
 );
