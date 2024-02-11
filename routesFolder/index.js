@@ -5,11 +5,15 @@ const swaggerDocument = require("../swagger.json");
 const Stores = require('./store');
 const Vehicles = require('./vehicles');
 
+
 // use the swagger documentation
 router.use("/api-docs", swaggerUi.serve);
 router.get("/api-docs", swaggerUi.setup(swaggerDocument));
 
 router.use('/stores', Stores);
 router.use('/vehicles', Vehicles);
+
+// routes for car parts collection
+routes.use('/parts', require('./parts'));
 
 module.exports = router;
