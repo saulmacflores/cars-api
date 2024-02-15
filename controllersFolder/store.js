@@ -1,5 +1,5 @@
 const db = require('../modelsFolder');
-const store_model = db.store_model;
+const store_model = db.stores;
 
 // Creates a Store
 exports.createStore = (req, res) => {
@@ -35,7 +35,7 @@ exports.createStore = (req, res) => {
         });
 };
 
-exports.findAllStores = () => {
+exports.findAllStores = (req, res) => {
     store_model
         .find(
             {},
