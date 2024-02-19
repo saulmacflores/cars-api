@@ -50,6 +50,8 @@ exports.findAllStores = (req, res) => {
         .then((data) => {
             if (!data.length) {
                 res.status(404).send({ message: `No Stores found.` });
+            } else {
+                res.send(data);
             }
         })
         .catch((error) => {
@@ -118,7 +120,7 @@ exports.updateStore = (req, res) => {
         });
 };
 
-exports.deleteStore = () => {
+exports.deleteStore = (req, res) => {
     const store_id = req.params.store_id;
     store_model
         .findOneAndDelete({ store_id: store_id })
