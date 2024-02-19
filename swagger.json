@@ -13,6 +13,38 @@
   "paths": {
     "/api-docs": {
       "get": {
+        "tags": [
+          "Api Documentation"
+        ],
+        "summary": "Displays api documentation",
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/login": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Logs the User in",
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/logout": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Logs the User out",
         "description": "",
         "responses": {
           "default": {
@@ -23,35 +55,69 @@
     },
     "/stores/": {
       "get": {
+        "tags": [
+          "Stores"
+        ],
+        "summary": "Gets all Store Records",
         "description": "",
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/storeRecord"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "No Stores found."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Some error occured while retrieving Store Records."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           }
         }
       },
       "post": {
+        "tags": [
+          "Stores"
+        ],
+        "summary": "Creates a Store Record",
         "description": "",
         "parameters": [
           {
             "name": "body",
             "in": "body",
+            "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "store_id": {
-                  "example": "any"
-                },
-                "store_name": {
-                  "example": "any"
-                },
-                "vehicle_inventory": {
-                  "example": "any"
-                },
-                "parts_inventory": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/storeRecord"
             }
           }
         ],
@@ -60,10 +126,25 @@
             "description": "No Content"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Content can not be empty!"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/notAuthed"
+            }
           },
           "404": {
             "description": "Not Found"
@@ -72,13 +153,29 @@
             "description": "Precondition Failed"
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Some error occurred while creating a Store Record."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           }
         }
       }
     },
     "/stores/{store_id}": {
       "get": {
+        "tags": [
+          "Stores"
+        ],
+        "summary": "Gets a Store Record",
         "description": "",
         "parameters": [
           {
@@ -90,17 +187,48 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/storeRecord"
+            }
           },
           "404": {
-            "description": "Not Found"
+            "description": "Not Found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "No Store Record found for id of [store_id]."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Error retrieving Store Record with id of [store_id]."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           }
         }
       },
       "put": {
+        "tags": [
+          "Stores"
+        ],
+        "summary": "Updates a Store Record",
         "description": "",
         "parameters": [
           {
@@ -112,22 +240,9 @@
           {
             "name": "body",
             "in": "body",
+            "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "store_id": {
-                  "example": "any"
-                },
-                "store_name": {
-                  "example": "any"
-                },
-                "vehicle_inventory": {
-                  "example": "any"
-                },
-                "parts_inventory": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/storeRecord"
             }
           }
         ],
@@ -136,23 +251,66 @@
             "description": "No Content"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Updated data cannot be empty!"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/notAuthed"
+            }
           },
           "404": {
-            "description": "Not Found"
+            "description": "Not Found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "No Store Record found for id of [store_id]."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           },
           "412": {
             "description": "Precondition Failed"
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Error updating Store Record with id of [store_id]."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           }
         }
       },
       "delete": {
+        "tags": [
+          "Stores"
+        ],
+        "summary": "Deletes a Store Record",
         "description": "",
         "parameters": [
           {
@@ -163,8 +321,54 @@
           }
         ],
         "responses": {
+          "204": {
+            "description": "No Content"
+          },
           "401": {
-            "description": "Unauthorized"
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/notAuthed"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "No Store Record found for id of [store_id]."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Error deleting Store Record with id of [store_id]."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/vehicles/new": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
           }
         }
       }
@@ -174,8 +378,8 @@
         "tags": [
           "Vehicles"
         ],
-        "summary": "Get all vehicles",
-        "description": "Endpoint to get all vehicles",
+        "summary": "Get all vehicles by make",
+        "description": "Endpoint to get all vehicles by make",
         "parameters": [
           {
             "name": "vin",
@@ -363,6 +567,193 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/parts/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "part_name": {
+                  "example": "any"
+                },
+                "category": {
+                  "example": "any"
+                },
+                "brand": {
+                  "example": "any"
+                },
+                "price": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "412": {
+            "description": "Precondition Failed"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/parts/{id}": {
+      "get": {
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "412": {
+            "description": "Precondition Failed"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "notAuthed": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "You do not have access!"
+        }
+      }
+    },
+    "storeRecord": {
+      "type": "object",
+      "properties": {
+        "store_id": {
+          "type": "string",
+          "example": "random_ID"
+        },
+        "store_name": {
+          "type": "string",
+          "example": "some name"
+        },
+        "vehicle_inventory": {
+          "type": "array",
+          "example": [
+            "vehicle ID"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "parts_inventory": {
+          "type": "array",
+          "example": [
+            "parts ID"
+          ],
+          "items": {
+            "type": "string"
           }
         }
       }

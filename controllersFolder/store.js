@@ -3,6 +3,24 @@ const store_model = db.stores;
 
 // Creates a Store
 exports.createStore = (req, res) => {
+    /*
+        #swagger.summary = 'Creates a Store Record'
+        #swagger.tags=['Stores']
+        #swagger.parameters['body'] = {
+            in: 'body',
+            required: true,
+            schema: { $ref: '#/definitions/storeRecord' }
+        }
+        #swagger.responses[400] = {
+            schema: { message: `Content can not be empty!`}
+        }
+        #swagger.responses[401] = {
+            schema: {$ref: '#/definitions/notAuthed'}
+        }
+        #swagger.responses[500] = {
+            schema: { message: `Some error occurred while creating a Store Record.`}
+        }
+    */
     if (!req.body.store_id) {
         res.status(400).send({ message: 'Content can not be empty!' });
         return;
@@ -36,6 +54,19 @@ exports.createStore = (req, res) => {
 };
 
 exports.findAllStores = (req, res) => {
+    /*
+        #swagger.summary = 'Gets all Store Records'
+        #swagger.tags=['Stores']
+        #swagger.responses[200] = {
+            schema: [{ $ref: '#/definitions/storeRecord'}]
+        }
+        #swagger.responses[404] = {
+            schema: { message: 'No Stores found.' }
+        }
+        #swagger.responses[500] = {
+            schema: { message: `Some error occured while retrieving Store Records.`}
+        }
+    */
     store_model
         .find(
             {},
@@ -65,6 +96,19 @@ exports.findAllStores = (req, res) => {
 
 // Finds a single store
 exports.findOneStore = (req, res) => {
+    /*
+        #swagger.summary = 'Gets a Store Record'
+        #swagger.tags=['Stores']
+        #swagger.responses[200] = {
+            schema: { $ref: '#/definitions/storeRecord'}
+        }
+        #swagger.responses[404] = {
+            schema: { message: `No Store Record found for id of [store_id].`}
+        }
+        #swagger.responses[500] = {
+            schema: { message: `Error retrieving Store Record with id of [store_id].`}
+        }
+    */
     const store_id = req.params.store_id;
     store_model
         .find({ store_id: store_id })
@@ -88,6 +132,27 @@ exports.findOneStore = (req, res) => {
 
 // Updates a store
 exports.updateStore = (req, res) => {
+    /*
+        #swagger.summary = 'Updates a Store Record'
+        #swagger.tags=['Stores']
+        #swagger.parameters['body'] = {
+            in: 'body',
+            required: true,
+            schema: {$ref: '#/definitions/storeRecord'}
+        }
+        #swagger.responses[400] = {
+            schema: { message: 'Updated data cannot be empty!' }
+        }
+        #swagger.responses[401] = {
+            schema: {$ref: '#/definitions/notAuthed'}
+        }
+        #swagger.responses[404] = {
+            schema: { message: `No Store Record found for id of [store_id].`}
+        }
+        #swagger.responses[500] = {
+            schema: { message: `Error updating Store Record with id of [store_id].`}
+        }
+    */
     if (!req.body.store_id) {
         res.status(400).send({ message: 'Content can not be empty!' });
         return;
@@ -121,6 +186,19 @@ exports.updateStore = (req, res) => {
 };
 
 exports.deleteStore = (req, res) => {
+    /*
+        #swagger.summary = 'Deletes a Store Record'
+        #swagger.tags=['Stores']
+        #swagger.responses[401] = {
+            schema: {$ref: '#/definitions/notAuthed' }
+        }
+        #swagger.responses[404] = {
+            schema: { message: `No Store Record found for id of [store_id].`}
+        }
+        #swagger.responses[500] = {
+            schema: { message: `Error deleting Store Record with id of [store_id].`}
+        }
+    */
     const store_id = req.params.store_id;
     store_model
         .findOneAndDelete({ store_id: store_id })

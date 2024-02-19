@@ -9,7 +9,14 @@ const Vehicles = require('./vehicles');
 
 // use the swagger documentation
 router.use('/api-docs', swaggerUi.serve);
-router.get('/api-docs', swaggerUi.setup(swaggerDocument));
+router.get(
+    '/api-docs',
+    swaggerUi.setup(swaggerDocument)
+    /*
+        #swagger.tags=['Api Documentation']
+        #swagger.summary="Displays api documentation"
+    */
+);
 
 router.use('/stores', Stores);
 router.use('/vehicles', Vehicles);
