@@ -47,13 +47,13 @@ routes.get("/:vehicle_id", vehiclesController.getOneVehicle);
 
 
 // create a vehicle
-routes.post("/", vehiclesController.create);
+routes.post("/", isAuthenticated, vehiclesController.create);
 
 // update a vehicle
-routes.put("/:_id", vehiclesController.update);
+routes.put("/:_id", isAuthenticated , vehiclesController.update);
 
 // delete a vehicle or all vehicles
-routes.delete("/:_id", vehiclesController.deleteOne);
-routes.delete("/", vehiclesController.deleteAll);
+routes.delete("/:_id", isAuthenticated, vehiclesController.deleteOne);
+routes.delete("/", isAuthenticated, vehiclesController.deleteAll);
 
 module.exports = routes;

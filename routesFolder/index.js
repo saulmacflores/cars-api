@@ -25,6 +25,18 @@ router.use('/vehicles', Vehicles);
 router.use('/parts', require('./parts'));
 
 router.get(
+    "/github/callback",
+    passport.authenticate("github", {
+      failureRedirect: "/api-docs",
+      session: false,
+    }),
+    (req, res) => {
+      req.session.user = req.user;
+      res.redirect("/");
+    }
+  );
+
+router.get(
     '/login',
     passport.authenticate('github'),
     (req, res) => {}

@@ -65,7 +65,6 @@
         width: 100%;
         box-sizing: border-box;
         z-index: 1000;
-        
       }
 
       .api-docs-button {
@@ -100,12 +99,12 @@
       }
     </style>
   </head>
-  
+
   <body>
     <div class="top-bar">
-        <a href="/vehicles" class="button all-vehicles">All Vehicles</a>
-        <a href="/api-docs" class="button api-docs-button">API Docs</a>
-      </div>
+      <a href="/vehicles" class="button all-vehicles">All Vehicles</a>
+      <a href="/api-docs" class="button api-docs-button">API Docs</a>
+    </div>
     <div class="vehicle-form-card">
       <form
         action="/vehicles"
@@ -155,26 +154,46 @@
     </div>
 
     <script>
-      // Your existing JavaScript for star ratings
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("vehicleForm");
 
-      document.getElementById("image").addEventListener("change", function () {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-          const base64String = e.target.result
-            .replace("data:", "")
-            .replace(/^.+,/, "");
-          // Create a hidden input to store the Base64 string
-          let base64Input = document.getElementById("base64Image");
-          if (!base64Input) {
-            base64Input = document.createElement("input");
-            base64Input.type = "hidden";
-            base64Input.id = "base64Image";
-            base64Input.name = "base64Image";
-            document.getElementById("vehicleForm").appendChild(base64Input);
-          }
-          base64Input.value = base64String;
-        };
-        reader.readAsDataURL(this.files[0]);
+        form.addEventListener("submit", function (event) {
+          event.preventDefault(); // Prevent the default form submission
+
+          // Iterate over each input and trim its value
+          const inputs = form.querySelectorAll(
+            "input[type=text], input[type=number], select, textarea"
+          );
+          inputs.forEach((input) => {
+            input.value = input.value.trim();
+          });
+
+          // If you're using AJAX to submit the form, place your AJAX submission code here
+          // For now, we will just proceed with the normal form submission
+          form.submit();
+        });
+
+        // Existing script to handle the image upload and convert to Base64
+        document
+          .getElementById("image")
+          .addEventListener("change", function () {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              const base64String = e.target.result
+                .replace("data:", "")
+                .replace(/^.+,/, "");
+              let base64Input = document.getElementById("base64Image");
+              if (!base64Input) {
+                base64Input = document.createElement("input");
+                base64Input.type = "hidden";
+                base64Input.id = "base64Image";
+                base64Input.name = "base64Image";
+                document.getElementById("vehicleForm").appendChild(base64Input);
+              }
+              base64Input.value = base64String;
+            };
+            reader.readAsDataURL(this.files[0]);
+          });
       });
     </script>
   </body>
