@@ -4,14 +4,14 @@ const validator = require("./validate.setup");
 
 const saveVehicle = async (req, res, next) => {
   const validationRule = {
-    make: 'required|string',
-    model: 'required|string',
-    year: 'required|number',
-    color: 'required|string',
-    price: 'required|number',
-    condition: 'required|string',
-    vin: 'required|string',
-    base64Image: 'required|string',
+    make: "required|string",
+    model: "required|string",
+    year: "required|integer", 
+    color: "required|string",
+    price: "required|numeric", 
+    condition: "required|string",
+    vin: "required|string",
+    base64Image: "required|string",
   };
   try {
     await validator(req.body, validationRule, {}, (error, status) => {
@@ -32,7 +32,6 @@ const saveVehicle = async (req, res, next) => {
       message: "Server error",
     });
   }
-  
 };
 
 module.exports = {
