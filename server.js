@@ -7,6 +7,8 @@ const session = require("express-session");
 const GithubStrategy = require("passport-github2").Strategy;
 const MongoStore = require('connect-mongo');
 
+require('dotenv').config();
+
 const app = express();
 const db = require("./modelsFolder");
 
@@ -22,13 +24,6 @@ app.use(session({
 
 // API 'use' Setup
 app.use(bodyParser.json());
-app.use(
-  session({
-    secret: "secret",
-    resave: false,
-    saveUninitialized: true,
-  })
-);
 app.use(passport.initialize());
 app.use(
   cors({
