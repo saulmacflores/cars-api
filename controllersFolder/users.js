@@ -1,5 +1,5 @@
 const mongodb = require('../modelsFolder');
-const users_model = mongodb.users_model;
+const users_model = require('../modelsFolder/users');
 const ObjectId = require('mongodb').ObjectId;
 
 const getAll = async (req, res) => {

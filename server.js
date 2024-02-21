@@ -5,22 +5,25 @@ const path = require("path");
 const passport = require("passport");
 const session = require("express-session");
 const GithubStrategy = require("passport-github2").Strategy;
-const MongoStore = require('connect-mongo');
+const MongoStore = require("connect-mongo");
+const users_model = require("../modelsFolder/users");
 
-require('dotenv').config();
+require("dotenv").config();
 
 const app = express();
 const db = require("./modelsFolder");
 
 // Session middleware for express-session with Redis
-app.use(session({
-    secret: 'mySecret',
+app.use(
+  session({
+    secret: "mySecret",
     resave: false,
     saveUninitialized: true,
     store: MongoStore.create({
-        mongoUrl: process.env.MONGODB_URI,
-    })
-}));
+      mongoUrl: process.env.MONGODB_URI,
+    }),
+  })
+);
 
 // API 'use' Setup
 app.use(bodyParser.json());
@@ -60,8 +63,29 @@ passport.use(
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
       callbackURL: process.env.CALLBACK_URL,
     },
-    (accessToken, refreshToken, profile, done) => {
-      return done(null, profile);
+    async function (accessToken, refreshToken, profile, done) {
+      try {
+        // Search for an existing user by their GitHub ID
+        let user = await users_model.findOne({ githubId: profile.id });
+
+        if (user) {
+          return done(null, user);
+        } else {
+          console.log(profile._json);
+          user = await users_model.create({
+            githubId: profile._json.id,
+            name: profile._json.name,
+            url: profile._json.html_url,
+            email: "",
+            username: "",
+            avatarImg: "",
+          });
+
+          return done(null, user);
+        }
+      } catch (error) {
+        return done(error, null);
+      }
     }
   )
 );

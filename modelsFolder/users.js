@@ -1,16 +1,17 @@
-module.exports = (mongoose) => {
-    const user_model = mongoose.model(
-        'user',
-        mongoose.Schema(
-            {
-            email: 'required|email',
-            username: 'required|string',
-            name: 'required|string',
-            avatarImg: 'required|string',
-            },
-            
-            { timestamps: true }
-        )
-    );
-    return user_model;
-};
+const mongoose = require("mongoose");
+
+const userSchema = mongoose.Schema(
+  {
+    name: String,
+    email: String,
+    username: String,
+    avatarImg: String,
+    githubId: String,
+    url: String,
+  },
+  { timestamps: true }
+);
+
+const User = mongoose.model("User", userSchema, "users"); // this last parameter specifies the collection name
+
+module.exports = User;
