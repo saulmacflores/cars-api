@@ -6,7 +6,7 @@ const passport = require("passport");
 const session = require("express-session");
 const GithubStrategy = require("passport-github2").Strategy;
 const MongoStore = require("connect-mongo");
-const User = require("../modelsFolder/users");
+const User = require("./modelsFolder/user");
 
 require("dotenv").config();
 
