@@ -5,27 +5,20 @@ const path = require("path");
 const passport = require("passport");
 const session = require("express-session");
 const GithubStrategy = require("passport-github2").Strategy;
-const redis = require('redis');
-const client = redis.createClient();
-
-console.log("Redis Client: ", client);
-
-
-const RedisStore = require('connect-redis')(session);
-const store = new RedisStore({
-  client,
-});
-console.log("Redis Store: ", RedisStore);
-console.log("Store: ", store);
+const MongoStore = require('connect-mongo');
 
 const app = express();
 const db = require("./modelsFolder");
 
 // Session middleware for express-session with Redis
 app.use(session({
-    store,
-    secret: 'my secret',
-  }));
+    secret: 'mySecret',
+    resave: false,
+    saveUninitialized: true,
+    store: MongoStore.create({
+        mongoUrl: process.env.MONGO_URI,
+    })
+}));
 
 // API 'use' Setup
 app.use(bodyParser.json());
