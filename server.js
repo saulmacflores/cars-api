@@ -74,9 +74,9 @@ passport.use(
             githubId: profile._json.id,
             name: profile._json.name,
             url: profile._json.html_url,
-            email: "",
-            username: "",
-            avatarImg: "",
+            email: profile._json.email || profile._json.blog,
+            username: profile._json.login,
+            avatarImg: profile_json.avatar_url,
           });
 
           return done(null, user);
@@ -98,7 +98,7 @@ passport.deserializeUser((user, done) => {
 app.get("/", (req, res) => {
   res.send(
     req.session.user !== undefined
-      ? `Logged in as ${req.session.user.displayName}`
+      ? `Logged in as ${req.session.user.name}`
       : "Logged Out"
   );
 });
