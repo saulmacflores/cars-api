@@ -6,7 +6,7 @@ const passport = require("passport");
 const session = require("express-session");
 const GithubStrategy = require("passport-github2").Strategy;
 const MongoStore = require("connect-mongo");
-const users_model = require("../modelsFolder/users");
+const User = require("../modelsFolder/users");
 
 require("dotenv").config();
 
@@ -66,13 +66,13 @@ passport.use(
     async function (accessToken, refreshToken, profile, done) {
       try {
         // Search for an existing user by their GitHub ID
-        let user = await users_model.findOne({ githubId: profile.id });
+        let user = await User.findOne({ githubId: profile.id });
 
         if (user) {
           return done(null, user);
         } else {
           console.log(profile._json);
-          user = await users_model.create({
+          user = await User.create({
             githubId: profile._json.id,
             name: profile._json.name,
             url: profile._json.html_url,
