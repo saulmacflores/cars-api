@@ -6,24 +6,33 @@ const saveVehicle = async (req, res, next) => {
   const validationRule = {
     make: 'required|string',
     model: 'required|string',
-    year: 'required|number',
+    year: 'required|Number',
     color: 'required|string',
-    price: 'required|number',
+    price: 'required|Number',
     condition: 'required|string',
     vin: 'required|string',
     base64Image: 'required|string',
   };
-  await validator(req.body, validationRule, {}, (error, status) => {
-    if (!status) {
-      res.status(412).send({
-        success: false,
-        message: "Validation failed",
-        data: error,
-      });
-    } else {
-      next();
-    }
-  }).catch((err) => console.log(err));
+  try {
+    await validator(req.body, validationRule, {}, (error, status) => {
+      if (!status) {
+        res.status(412).send({
+          success: false,
+          message: "Validation failed",
+          data: error,
+        });
+      } else {
+        next();
+      }
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({
+      success: false,
+      message: "Server error",
+    });
+  }
+  
 };
 
 module.exports = {

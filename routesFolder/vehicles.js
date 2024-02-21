@@ -54,7 +54,7 @@ routes.post("/", validation.saveVehicle, vehiclesController.create);
 routes.put("/:_id", validation.saveVehicle ,vehiclesController.update);
 
 // delete a vehicle or all vehicles
-routes.delete("/:_id", validation.saveVehicle, vehiclesController.deleteOne);
-routes.delete("/", validation.saveVehicle, vehiclesController.deleteAll);
+routes.delete("/:_id", vehiclesController.deleteOne);
+routes.delete("/", vehiclesController.deleteAll);
 
 module.exports = routes;
