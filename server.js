@@ -7,6 +7,7 @@ const session = require("express-session");
 const GithubStrategy = require("passport-github2").Strategy;
 const redis = require("redis");
 const connectRedis = require("connect-redis");
+console.log(connectRedis);
 
 let redisClient = redis.createClient({
   legacyMode: true,
