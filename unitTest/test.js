@@ -4,15 +4,13 @@ const express = require('express');
 const storeRouter = require('../routesFolder/store');
 const vehiclesRouter = require('../routesFolder/vehicles');
 const usersRouter = require('../routesFolder/users');
-const partsRouter = require('../routesFolder/parts')
-// Create an Express app
-const app = express();
+//const partsRouter = require('../routesFolder/parts')
 
 // Mount the route handlers
 app.use('/api/store', storeRouter);
 app.use('/api/vehicles', vehiclesRouter);
 app.use('/api/users', usersRouter);
-app.use('/api/parts',partsRouter);
+//app.use('/api/parts',partsRouter);
 
 describe('GET /api/stores', () => {
   it('responds with JSON containing a list of stores', (done) => {
