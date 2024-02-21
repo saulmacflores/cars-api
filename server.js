@@ -7,18 +7,23 @@ const session = require("express-session");
 const GithubStrategy = require("passport-github2").Strategy;
 const redis = require("redis");
 const connectRedis = require("connect-redis");
+
+// Assuming this console.log is for debug purposes
 console.log(connectRedis);
 
+// Create Redis client
 let redisClient = redis.createClient({
-  legacyMode: true,
+  legacyMode: true, // Use legacy mode for compatibility with Node.js callbacks
 });
 redisClient.connect().catch(console.error);
 
-const RedisStore = connectRedis(session);
+// Configure Redis store for sessions
+const RedisStore = connectRedis(session)(session);
 
 const app = express();
 const db = require("./modelsFolder");
 
+// Session middleware for express-session with Redis
 app.use(
   session({
     store: new RedisStore({ client: redisClient }),
