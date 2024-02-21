@@ -48,13 +48,13 @@ routes.get("/:vehicle_id", vehiclesController.getOneVehicle);
 
 
 // create a vehicle
-routes.post("/", isAuthenticated, validation.saveVehicle, vehiclesController.create);
+routes.post("/", validation.saveVehicle, vehiclesController.create);
 
 // update a vehicle
-routes.put("/:_id", isAuthenticated , validation.saveVehicle ,vehiclesController.update);
+routes.put("/:_id", validation.saveVehicle ,vehiclesController.update);
 
 // delete a vehicle or all vehicles
-routes.delete("/:_id", isAuthenticated, validation.saveVehicle, vehiclesController.deleteOne);
-routes.delete("/", isAuthenticated, validation.saveVehicle, vehiclesController.deleteAll);
+routes.delete("/:_id", validation.saveVehicle, vehiclesController.deleteOne);
+routes.delete("/", validation.saveVehicle, vehiclesController.deleteAll);
 
 module.exports = routes;
