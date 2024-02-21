@@ -6,7 +6,8 @@
     "scripts": {
         "start": "nodemon server.js",
         "start-prod": "node server.js",
-        "swagger": "node ./swagger.js"
+        "swagger": "node ./swagger.js",
+        "test": "jest"
     },
     "keywords": [],
     "author": "",
@@ -28,6 +29,8 @@
         "validatorjs": "^3.22.1"
     },
     "devDependencies": {
+        "jest": "^29.7.0",
+        "supertest": "^6.3.4",
         "swagger-autogen": "^2.23.7"
     }
 }
