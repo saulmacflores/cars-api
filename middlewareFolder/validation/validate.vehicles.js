@@ -6,9 +6,9 @@ const saveVehicle = async (req, res, next) => {
   const validationRule = {
     make: 'required|string',
     model: 'required|string',
-    year: 'required|Number',
+    year: 'required|number',
     color: 'required|string',
-    price: 'required|Number',
+    price: 'required|number',
     condition: 'required|string',
     vin: 'required|string',
     base64Image: 'required|string',
