@@ -6,14 +6,13 @@ const passport = require("passport");
 const session = require("express-session");
 const GithubStrategy = require("passport-github2").Strategy;
 const MongoStore = require("connect-mongo");
-const User = require("./modelsFolder/user");
+const User = require("./modelsFolder/users");
 
 require("dotenv").config();
 
 const app = express();
 const db = require("./modelsFolder");
 
-// Session middleware for express-session with Redis
 app.use(
   session({
     secret: "mySecret",
@@ -25,7 +24,6 @@ app.use(
   })
 );
 
-// API 'use' Setup
 app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(
