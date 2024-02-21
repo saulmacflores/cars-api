@@ -76,8 +76,9 @@ passport.use(
             url: profile._json.html_url,
             email: profile._json.email || profile._json.blog,
             username: profile._json.login,
-            avatarImg: profile_json.avatar_url,
+            avatarImg: profile._json.avatar_url,
           });
+          console.log("User created", user)
 
           return done(null, user);
         }
@@ -87,12 +88,14 @@ passport.use(
     }
   )
 );
-passport.serializeUser((user, done) => {
+passport.serializeUser(function (user, done) {
   done(null, user);
 });
-passport.deserializeUser((user, done) => {
+
+passport.deserializeUser(function (user, done) {
   done(null, user);
 });
+
 
 // Passport Routes
 app.get("/", (req, res) => {
