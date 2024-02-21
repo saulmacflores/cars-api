@@ -9,7 +9,7 @@ const doc = {
             'This API allows you to create, read, update, and delete vehicles, stores, parts, and users.',
     },
     host: 'cse341-teamproject-carsapi.onrender.com',
-    schemes: ['https'],
+    schemes: ['https', 'http'],
     definitions: {
         notAuthed: {
             message: `You do not have access!`,
