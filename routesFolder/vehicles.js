@@ -2,6 +2,7 @@
 const routes = require("express").Router();
 const vehiclesController = require("../controllersFolder/vehicles");
 const { isAuthenticated } = require("../middlewareFolder/authenticate");
+const validation = require("../middlewareFolder/validation/validate.vehicles");
 
 routes.get("/new", (req, res) => {
     res.render("new-vehicle");
@@ -47,13 +48,13 @@ routes.get("/:vehicle_id", vehiclesController.getOneVehicle);
 
 
 // create a vehicle
-routes.post("/", isAuthenticated, vehiclesController.create);
+routes.post("/", isAuthenticated, validation.saveVehicle, vehiclesController.create);
 
 // update a vehicle
-routes.put("/:_id", isAuthenticated , vehiclesController.update);
+routes.put("/:_id", isAuthenticated , validation.saveVehicle ,vehiclesController.update);
 
 // delete a vehicle or all vehicles
-routes.delete("/:_id", isAuthenticated, vehiclesController.deleteOne);
-routes.delete("/", isAuthenticated, vehiclesController.deleteAll);
+routes.delete("/:_id", isAuthenticated, validation.saveVehicle, vehiclesController.deleteOne);
+routes.delete("/", isAuthenticated, validation.saveVehicle, vehiclesController.deleteAll);
 
 module.exports = routes;

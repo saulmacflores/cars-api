@@ -1,11 +1,13 @@
 const router = require('express').Router();
 const passport = require('passport');
 
+
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('../swagger.json');
 
 const Stores = require('./store');
 const Vehicles = require('./vehicles');
+const Users = require('./users');
 
 // use the swagger documentation
 router.use('/api-docs', swaggerUi.serve);
@@ -20,6 +22,7 @@ router.get(
 
 router.use('/stores', Stores);
 router.use('/vehicles', Vehicles);
+router.use('/users', Users);
 
 // routes for car parts collection
 router.use('/parts', require('./parts'));
