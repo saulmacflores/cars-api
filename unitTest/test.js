@@ -1,3 +1,4 @@
+
 const request = require('supertest');
 const app = require('../server');
 const express = require('express');
@@ -5,6 +6,21 @@ const storeRouter = require('../routesFolder/store');
 const vehiclesRouter = require('../routesFolder/vehicles');
 const usersRouter = require('../routesFolder/users');
 //const partsRouter = require('../routesFolder/parts')
+
+
+
+//This mock replaces the GithubStrategy constructor with a mock implementation, preventing it from being called during testing.
+jest.mock('passport-github2', () => {
+    class MockStrategy {
+      constructor(options, verify) {}
+    }
+    return {
+      Strategy: MockStrategy
+    };
+  });
+
+  
+
 
 // Mount the route handlers
 app.use('/api/store', storeRouter);
