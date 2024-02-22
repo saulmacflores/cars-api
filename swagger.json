@@ -617,12 +617,18 @@
       },
       "post": {
         "description": "",
+        "produces": [
+          "application/json"
+        ],
         "responses": {
-          "201": {
-            "description": "Created"
+          "200": {
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "412": {
             "description": "Precondition Failed"
